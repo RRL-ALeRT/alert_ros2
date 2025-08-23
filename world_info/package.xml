@@ -3,9 +3,9 @@
 <package format="3">
   <name>world_info</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>World understanding and perception package providing object detection, QR code reading, ArUco marker detection, and hazmat detection capabilities</description>
   <maintainer email="skpawar1305@gmail.com">skpawar1305</maintainer>
-  <license>TODO: License declaration</license>
+  <license>BSD-3-Clause</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
   <depend>rclcpp</depend>
