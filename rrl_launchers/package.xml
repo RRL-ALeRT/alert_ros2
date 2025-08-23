@@ -3,9 +3,9 @@
 <package format="3">
   <name>rrl_launchers</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Launch file configurations for SLAM, navigation, mapping, and perception systems including support for multiple camera setups and various SLAM algorithms</description>
   <maintainer email="m.kirsch@fh-aachen.de">max</maintainer>
-  <license>TODO: License declaration</license>
+  <license>BSD-3-Clause</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
