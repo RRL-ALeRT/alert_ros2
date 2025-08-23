@@ -206,7 +206,7 @@ This project is licensed under the BSD 3-Clause License. See the [LICENSE](LICEN
 ## Maintainers
 
 - **Max Kirsch** - m.kirsch@fh-aachen.de
-- **Sanket Pawar** - skpawar1305@gmail.com
+- **Shubham Pawar** - skpawar1305@gmail.com
 
 ## Related Projects
 
