@@ -68,6 +68,7 @@ set(PYTHON_NODES
   motion_detection.py
   plan_3d_path.py
   rrl_qreader.py
+  rrl_apriltag.py
   olive_magnetic.py
   arduino_lights.py
   kinova_yolov8_openvino.py
