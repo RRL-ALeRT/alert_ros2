@@ -3,9 +3,9 @@
 <package format="3">
   <name>spot_driver_plus</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Enhanced Boston Dynamics Spot robot driver with additional perception features including YOLO object detection, point cloud processing, and advanced manipulation capabilities</description>
   <maintainer email="skpawar1305@gmail.com">max1</maintainer>
-  <license>TODO: License declaration</license>
+  <license>BSD-3-Clause</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
