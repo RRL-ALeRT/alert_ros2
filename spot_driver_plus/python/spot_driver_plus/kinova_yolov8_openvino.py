@@ -4,6 +4,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
+from qreader import QReader
 import cv2
 from world_info_msgs.msg import BoundingBox, BoundingBoxArray
 from ultralytics import YOLO
@@ -39,19 +40,26 @@ class ObjectDetector(Node):
             self.depth_bounding_box_pubs_dict[frame_name] = self.depth_bounding_box_pub
 
         self.br = CvBridge()
+        self.qreader = QReader()
         pkg_dir = get_package_share_directory("spot_driver_plus")
         self.yolo = YOLO(f"{pkg_dir}/yolov8n/{self.model_type}_openvino_model", task="detect")  # Initialize YOLO model
 
     def listener_callback(self, msg):
         cv_image = deepcopy(self.br.imgmsg_to_cv2(msg, desired_encoding='bgr8'))
         # rgb_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+        rgb_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+        detections = self.qreader.detect_and_decode(rgb_image, return_detections=True)
 
         # Predict with YOLO model
         results = self.yolo.predict(cv_image, verbose=False)
 
         bb_array_msg = BoundingBoxArray()
+        qbb_array_msg = BoundingBoxArray()
         bb_array_msg.header = msg.header
+        qbb_array_msg.header = msg.header
         bb_array_msg.type = self.model_type
+        qbb_array_msg.type = "qr"
+        
 
         for result in results[0]:
             cx, cy, width, height = result.boxes.xywh.cpu()[0]
@@ -69,9 +77,28 @@ class ObjectDetector(Node):
 
             bb_array_msg.array.append(bb_msg)
 
+
+        for content, points in zip(detections[0], detections[1]):
+            if content is None:
+                continue
+
+            qwidth, qheight = points["wh"]
+            qcx, qcy = points["cxcy"]
+
+            qbb_msg = BoundingBox()
+            qbb_msg.name = str(content)
+            qbb_msg.width = qwidth
+            qbb_msg.height = qheight
+            qbb_msg.cx = qcx
+            qbb_msg.cy = qcy
+
+            qbb_array_msg.array.append(qbb_msg)
+
         # Publish bounding box array
         self.bounding_box_pubs_dict[msg.header.frame_id].publish(bb_array_msg)
+        self.bounding_box_pubs_dict[msg.header.frame_id].publish(qbb_array_msg)
         self.depth_bounding_box_pubs_dict[msg.header.frame_id].publish(bb_array_msg)
+        self.depth_bounding_box_pubs_dict[msg.header.frame_id].publish(qbb_array_msg)
 
 def main(args=None):
     rclpy.init(args=args)

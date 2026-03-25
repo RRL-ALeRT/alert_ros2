@@ -20,11 +20,11 @@ def generate_launch_description():
     )
     spot_plus.add_action(config_file_arg)
 
-    os.environ["SPOT_URDF_EXTRAS"] = os.path.join(get_package_share_directory('spot_driver_plus'), 'urdf', 'gen3.urdf.xacro')
+    # os.environ["SPOT_URDF_EXTRAS"] = os.path.join(get_package_share_directory('spot_driver_plus'), 'urdf', 'gen3.urdf.xacro')
     # Include and launch the child launch file
     child_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('spot_driver'), 'launch', 'spot_driver.launch.py')),
-        launch_arguments={'config_file': launch.substitutions.LaunchConfiguration('config_file')}.items()
+        launch_arguments={'config_file': launch.substitutions.LaunchConfiguration('config_file'), 'stitch_front_images': 'True'}.items(),
     )
     spot_plus.add_action(child_launch)
 
@@ -47,6 +47,25 @@ def generate_launch_description():
        executable='arduino_lights.py',
        output='screen',
     )
-    spot_plus.add_action(arduino_lights)
+    # spot_plus.add_action(arduino_lights)
+
+    livox_tf = launch_ros.actions.Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        output='screen',
+        arguments=['--x', '0.39', '--y', '0', '--z', '0.14',
+                '--yaw', '1.56', '--pitch', '3.14', '--roll',
+                '2.35', '--frame-id', 'body', '--child-frame-id', '/livox_frame'],
+    )
+
+    spot_plus.add_action(livox_tf)
+
+    body_world = launch_ros.actions.Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=['0', '0', '0', '0', '0', '0', 'body', 'world'],
+        output='screen',
+    )
+    spot_plus.add_action(body_world)
 
     return spot_plus

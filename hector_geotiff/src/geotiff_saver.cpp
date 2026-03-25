@@ -140,7 +140,7 @@ class GeotiffSaver
       RCLCPP_INFO_ONCE(node_->get_logger(), "1m Map loaded.");
       hector_geotiff::GeotiffWriter geotiff_writer(false);
 
-      map_name_ = "RoboCup2024-" + team_name_ + "-lap" + lap_name_ + "_1m";
+      map_name_ = "RoboCup2026-" + team_name_ + "-lap" + lap_name_ + "_1m";
       geotiff_writer.setMapFileName(map_name_);
       geotiff_writer.setupTransforms(map_1m);
       geotiff_writer.setupImageSize();
@@ -168,7 +168,7 @@ class GeotiffSaver
 
       k = 0;
       for (auto wi: wi_array.array) {
-        if (wi.type == "qr" && wi.pose.position.z == 1.0) {
+        if (wi.type == "ar_tag" && wi.pose.position.z == 1.0) {
           geotiff_writer.drawObjectOfInterest(Eigen::Vector2f(
             wi.pose.position.x, wi.pose.position.y),
             std::to_string(wi_array.id_array[k]), Eigen::Vector3f(255,100,30), "CIRCLE", 0);
@@ -202,7 +202,7 @@ class GeotiffSaver
       RCLCPP_INFO_ONCE(node_->get_logger(), "2m Map loaded.");
       hector_geotiff::GeotiffWriter geotiff_writer(false);
 
-      map_name_ = "RoboCup2024-" + team_name_ + "-lap" + lap_name_;
+      map_name_ = "RoboCup2026-" + team_name_ + "-lap" + lap_name_;
       geotiff_writer.setMapFileName(map_name_ +  + "_2m");
       geotiff_writer.setupTransforms(map_2m);
       geotiff_writer.setupImageSize();
@@ -230,7 +230,7 @@ class GeotiffSaver
 
       k = 0;
       for (auto wi: wi_array.array) {
-        if (wi.type == "qr" &&  wi.pose.position.z == 2.0) {
+        if (wi.type == "ar_tag" &&  wi.pose.position.z == 2.0) {
           geotiff_writer.drawObjectOfInterest(Eigen::Vector2f(
             wi.pose.position.x, wi.pose.position.y),
             std::to_string(wi_array.id_array[k]), Eigen::Vector3f(240,10,10), "CIRCLE", 0);
@@ -263,6 +263,7 @@ class GeotiffSaver
     };
 
     void saveCSV() {
+      std::locale::global(std::locale::classic());  // Add this line
       std::ofstream myfile;
 
       auto t = std::time(nullptr);
@@ -278,7 +279,7 @@ class GeotiffSaver
       myfile << wi_array.start_time;
 
       myfile << "\"" + lap_name_ + "\"" << "\n\n";
-      myfile << "id,time,text,x,y,z,robot,mode,type";
+      myfile << "detection,time,type,name,x,y,z,robot,mode";
 
       std::vector<std::string> final_world_data;
       final_world_data.resize(wi_array.array.size());
@@ -288,13 +289,13 @@ class GeotiffSaver
         final_world_data[wi_array.id_array[i]] = "\n" +
                               std::to_string(wi_array.id_array[i]) + "," +
                               wi_array.time_array[i] + "," +
+                              wi_array.array[i].type + "," +
                               wi_array.array[i].name + "," +
                               std::to_string(wi_array.array[i].pose.position.x) + "," +
                               std::to_string(wi_array.array[i].pose.position.y) + "," +
                               std::to_string(wi_array.array[i].pose.position.z) + "," +
                               wi_array.robot_array[i] + "," +
-                              wi_array.mode_array[i] + "," +
-                              wi_array.array[i].type;
+                              wi_array.mode_array[i];
       }
 
       for (auto wd: final_world_data)

@@ -36,7 +36,7 @@ rclcpp_components_register_node(filter_pcl
 PLUGIN "rrl_launchers::FilteredPointCloud"
 EXECUTABLE filter_pcl_node)
 
-install(DIRECTORY launch
+install(DIRECTORY launch config
   DESTINATION share/${PROJECT_NAME}
 )
 

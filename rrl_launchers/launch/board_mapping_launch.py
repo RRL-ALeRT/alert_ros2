@@ -1,10 +1,21 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.actions import ExecuteProcess
+from launch.actions import ExecuteProcess, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from ament_index_python.packages import get_package_share_directory
+import os
+
+# pkg_dir = get_package_share_directory("spot_gen3_moveit")
+# linear_board_launch = os.path.join(pkg_dir, "launch", "linear_board.launch.py")
 
 
 def generate_launch_description():
     launch_list = []
+
+    child_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('spot_gen3_moveit'), 'launch', 'linear_board.launch.py')),
+    )
+    launch_list.append(child_launch)
 
     world_info = Node(
         package="world_info",
@@ -19,7 +30,7 @@ def generate_launch_description():
         executable="rrl_apriltag.py",
         output="screen",
     )
-    launch_list.append(qr_detector)
+    # launch_list.append(qr_detector)
 
     hazmat_node = Node(
         package="spot_driver_plus",
@@ -27,11 +38,11 @@ def generate_launch_description():
         output="screen",
         parameters=[{"model": "hazmat"}],
     )
-    launch_list.append(hazmat_node)
+    # launch_list.append(hazmat_node)
 
     object_node = Node(
         package="spot_driver_plus",
-        executable="rrl_yolov8_openvino.py",
+        executable="kinova_yolov8_openvino.py",
         output="screen",
         parameters=[{"model": "board"}],
     )

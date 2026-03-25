@@ -10,14 +10,16 @@ from ament_index_python.packages import get_package_share_directory
 from copy import deepcopy
 
 IMAGE_TOPICS = {
-    "rs_front_color_optical_frame": "/rs_front/color/image_raw",
-    "rs_left_color_optical_frame": "/rs_left/color/image_raw",
-    "rs_right_color_optical_frame": "/rs_right/color/image_raw",
+    "camera_color_frame": "/kinova_color",
+    "rs_front_color_optical_frame": "/rs_front/camera/color/image_raw",
+    "rs_left_color_optical_frame": "/rs_left/camera/color/image_raw",
+    "rs_right_color_optical_frame": "/rs_right/camera/color/image_raw",
 }
 DEPTH_IMAGE_TOPICS = {
-    "rs_front_color_optical_frame": "/rs_front/aligned_depth_to_color/image_raw",
-    "rs_left_color_optical_frame": "/rs_left/aligned_depth_to_color/image_raw",
-    "rs_right_color_optical_frame": "/rs_right/aligned_depth_to_color/image_raw",
+    "camera_color_frame": "/depth_registered/image_rect",
+    "rs_front_color_optical_frame": "/rs_front/camera/aligned_depth_to_color/image_raw",
+    "rs_left_color_optical_frame": "/rs_left/camera/aligned_depth_to_color/image_raw",
+    "rs_right_color_optical_frame": "/rs_right/camera/aligned_depth_to_color/image_raw",
 }
 
 
@@ -62,7 +64,7 @@ class ObjectDetector(Node):
             bb_msg = BoundingBox()
             bb_msg.name = result.names[result.boxes.cls.cpu()[0].item()]
             confidence = float(result.boxes.conf.cpu()[0].item())
-            if confidence < 0.8:
+            if confidence < 0.7:
                 continue
             bb_msg.confidence = confidence
             bb_msg.width = float(width)

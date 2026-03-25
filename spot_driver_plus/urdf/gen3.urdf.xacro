@@ -51,36 +51,14 @@
     sim_ignition="$(arg sim_ignition)"
     sim_isaac="$(arg sim_isaac)"
     use_external_cable="$(arg use_external_cable)" >
-    <origin xyz="0.1656 0 0.12" rpy="0 0 0" />  <!-- position robot in the world -->
+    <origin xyz="0.3 0 0.085" rpy="0 0 0" />  <!-- position robot in the world -->
   </xacro:load_robot>
-
-  <!-- Front CB -->
-  <link name="front_collision">
-  <visual>
-    <geometry>
-    <box size="0.2 0.15 0.15" />
-    </geometry>
-    <material name="red">
-    <color rgba="1 0 0 1" />
-    </material>
-  </visual>
-  <collision>
-    <geometry>
-    <box size="0.2 0.15 0.15" />
-    </geometry>
-  </collision>
-  </link>
-  <joint name="body_front_collision" type="fixed">
-    <child link="front_collision" />
-    <parent link="body" />
-    <origin xyz="0.3 0 0.15" rpy="0 0 0" />
-  </joint>
 
   <!-- Back CB -->
   <link name="rear_collision">
   <visual>
     <geometry>
-    <box size="0.6 0.14 0.14" />
+    <box size="0.55 0.10 0.10" />
     </geometry>
     <material name="red">
     <color rgba="1 0 0 1" />
@@ -88,14 +66,36 @@
   </visual>
   <collision>
     <geometry>
-    <box size="0.6 0.14 0.14" />
+    <box size="0.55 0.10 0.10" />
     </geometry>
   </collision>
   </link>
   <joint name="body_rear_collision" type="fixed">
     <child link="rear_collision" />
     <parent link="body" />
-    <origin xyz="-0.15 0 0.17" rpy="0 0 0" />
+    <origin xyz="-0.05 0 0.15" rpy="0 0 0" />
+  </joint>
+
+  <!-- Front CB -->
+  <link name="front_collision">
+    <visual>
+        <geometry>
+        <box size="0.10 0.10 0.10" />
+        </geometry>
+        <material name="red">
+        <color rgba="1 0 0 1" />
+        </material>
+    </visual>
+    <collision>
+        <geometry>
+        <box size="0.10 0.10 0.10" />
+        </geometry>
+    </collision>
+    </link>
+    <joint name="body_front_collision" type="fixed">
+        <child link="front_collision" />
+        <parent link="body" />
+        <origin xyz="0.42 0 0.125" rpy="0  0.3 0" />
   </joint>
 
 </robot>

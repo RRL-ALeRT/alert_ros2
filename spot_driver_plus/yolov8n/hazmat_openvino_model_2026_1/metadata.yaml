@@ -1,6 +1,6 @@
 description: Ultralytics YOLO11n model trained on config.yaml
 author: Ultralytics
-date: '2026-03-11T15:16:07.599101'
+date: '2026-03-11T13:14:43.962984'
 version: 8.4.14
 license: AGPL-3.0 License (https://ultralytics.com/license)
 docs: https://docs.ultralytics.com
@@ -11,21 +11,19 @@ imgsz:
 - 640
 - 640
 names:
-  0: blasting_agents
-  1: corrosive
-  2: dangerous_when_wet
-  3: explosives
-  4: flammable_gas
-  5: flammable_solid
-  6: fuel_oil
-  7: inhalation_hazard
-  8: non_flammable_gas
-  9: organic_peroxide
-  10: oxidizer
-  11: oxidizer
-  12: poison
-  13: radioactive
-  14: spontaneously_combustible
+  0: corrosive
+  1: dangerous
+  2: explosive
+  3: flammable
+  4: flammable-solid
+  5: infectious-substance
+  6: inhalation-hazard
+  7: non-flammable-gas
+  8: organic-peroxide
+  9: oxygen
+  10: poison
+  11: radioactive
+  12: spontaneously-combustible
 args:
   batch: 1
   fraction: 1.0

@@ -238,7 +238,7 @@ class PointCloudToGrid(Node):
         super().__init__('pointcloud_to_grid_node')
 
         # Parameters
-        self.declare_parameter('cloud_in_topic', '/navigation/octomap_point_cloud_centers_filtered')
+        self.declare_parameter('cloud_in_topic', '/octomap_point_cloud_centers_filtered')
         self.declare_parameter('grid_topic_name', '/two_d')
         self.declare_parameter('cell_size', 0.1)
         self.declare_parameter('z_threshold', Z_THRESHOLD)

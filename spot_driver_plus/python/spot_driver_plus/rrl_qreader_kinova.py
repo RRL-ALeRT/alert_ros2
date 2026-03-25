@@ -15,16 +15,10 @@ from world_info_msgs.msg import BoundingBox, BoundingBoxArray
 from copy import deepcopy
 
 IMAGE_TOPICS = {
-    "kinova_color": "/kinova_color",
-    "rs_front_color_optical_frame": "/rs_front/camera/color/image_raw",
-    "rs_left_color_optical_frame": "/rs_left/camera/color/image_raw",
-    "rs_right_color_optical_frame": "/rs_right/camera/color/image_raw",
+    "camera_color_frame": "/kinova_color",
 }
 DEPTH_IMAGE_TOPICS = {
-    "kinova_color": "/depth_registered/image_rect",
-    "rs_front_color_optical_frame": "/rs_front/camera/aligned_depth_to_color/image_raw",
-    "rs_left_color_optical_frame": "/rs_left/camera/aligned_depth_to_color/image_raw",
-    "rs_right_color_optical_frame": "/rs_right/camera/aligned_depth_to_color/image_raw",
+    "camera_color_frame": "/kinova_depth",
 }
 
 

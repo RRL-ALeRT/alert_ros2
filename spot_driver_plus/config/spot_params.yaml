@@ -2,7 +2,7 @@
 
 /**:
   ros__parameters:
-    robot_state_rate: 10.0
+    robot_state_rate: 30.0
     metrics_rate: 0.04
     lease_rate: 1.0
     image_rate: 10.0
@@ -12,11 +12,25 @@
     deadzone: 0.05
     estop_timeout: 10.0
     start_estop: False
-    preferred_odom_frame: "vision" # pass either odom/vision. This frame will become the parent of body in tf2 tree and will be used in odometry topic. https://dev.bostondynamics.com/docs/concepts/geometry_and_frames.html?highlight=frame#frames-in-the-spot-robot-world for more info.
+    preferred_odom_frame: "vision"
     async_tasks_rate: 20.0
-    cmd_duration: 0.4 # Increase if spot stutters while walking
+    cmd_duration: 0.4
     initialize_spot_cam: False
     rgb_cameras: False
     publish_rgb: True
     publish_depth: True
-    publish_depth_registered: False
+    publish_depth_registered: True
+    # depth_register_mode: "disable"
+    publish_compressed_images: False
+    uncompress_images: True
+    # publish_point_clouds: True
+    cameras_used: ["frontleft", "frontright", "left", "right", "back"]  # Only these cameras will be used
+    has_arm: False
+    gripperless: True
+    virtual_camera_intrinsics: [385.0, 0.0, 315.0, 0.0, 385.0, 844.0, 0.0, 0.0, 1.0]
+    # Plane that the stitched image is projected on with respect to the virtual camera frame. 
+    virtual_camera_projection_plane: [-0.15916, 0.0, 0.987253]
+    # The distance from the virtual camera frame to the projection plane
+    virtual_camera_plane_distance: 0.5
+    # The stitched image will be of size (<frontleft image width>, <frontleft image height> + row_padding)
+    stitched_image_row_padding: 1182
